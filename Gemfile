@@ -7,7 +7,7 @@ gem "rails", "~> 7.0.0.alpha2"
 gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 gem "jsbundling-rails", "~> 0.1.0"
-gem "turbo-rails", ">= 0.7.11"
+gem 'turbo-rails', '~> 0.8.3'
 gem "stimulus-rails", ">= 0.4.0"
 gem "cssbundling-rails", ">= 0.1.0"
 gem "jbuilder", "~> 2.7"
