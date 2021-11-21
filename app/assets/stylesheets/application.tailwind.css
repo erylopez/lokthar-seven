@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --color-background: #1f2937
+  --color-foreground: #1f2937;
+  --color-link-highlight: #3b33b1;
+  --color-text-highlight: #5155c2;
+  --color-border-highlight: #6366f1;
+  --color-green-primary: #24f39f;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
