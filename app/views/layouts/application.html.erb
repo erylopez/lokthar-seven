@@ -14,6 +14,18 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="bg-no-repeat bg-cover bg-top h-screen overflow-hidden z-0 relative">
+       <div class="w-full h-screen dark:bg-gray-900 absolute bg-opacity-70 py-8"></div>
+       <div class="md:mx-auto bg-gray-100 dark:bg-gray-900 relative">
+          <div class="w-full flex h-screen">
+             <%= render 'shared/sidebar' %>
+             <div class="flex flex-col w-full h-screen relative">
+                <%= render 'shared/header' %>
+                <%= yield %>            
+             </div>
+          </div>
+          <div class="top-[5%] right-2 md:right-10 absolute z-40 shadow-md"></div>
+       </div>
+    </div>
   </body>
 </html>
