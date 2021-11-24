@@ -13,6 +13,17 @@
             <div>
                <h3 class="font-bold text-md">Como aun no eres miembro tu acceso a esta area es limitado</h3>
                <p class="text-sm">Solicita acceso como miembro completo <a href="#" class="text-indigo-400">completando tus datos aqui</a> para que un moderador los revise y complete tu proceso de reclutamiento</p>
+               <% if current_user %>
+                <%= current_user.discord_tag %>
+
+                <%= button_to "Logout", destroy_user_session_path, method: :delete, data: { turbo: false },
+                    class: "w-[200px] border border-gray-400 text-center p-1 mt-2 hover:bg-gray-400"
+                %>
+               <% else %>
+                 <%= button_to "Sign in with Discord", user_discord_omniauth_authorize_path, data: { turbo: false },
+                     class: "w-[200px] border border-gray-400 text-center p-1 mt-2 hover:bg-gray-400"
+                 %>
+               <% end -%>
             </div>
          </div>
          <section class="mt-6">

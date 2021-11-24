@@ -13,9 +13,14 @@ gem "cssbundling-rails", ">= 0.1.0"
 gem "jbuilder", "~> 2.7"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", ">= 1.4.4", require: false
+gem "discordrb", github: "shardlab/discordrb", branch: "main"
+gem 'devise', git: 'https://github.com/heartcombo/devise', branch: 'main'
+gem 'omniauth-discord'
+gem 'omniauth-rails_csrf_protection'
 
 group :development, :test do
   gem "debug", ">= 1.0.0", platforms: %i[ mri mingw x64_mingw ]
+  gem "pry"
 end
 
 group :development do
