@@ -15,11 +15,11 @@
 
   <body>
     <div class="bg-no-repeat bg-cover bg-top h-screen overflow-hidden z-0 relative">
-       <div class="w-full h-screen dark:bg-gray-900 absolute bg-opacity-70 py-8"></div>
-       <div class="md:mx-auto bg-gray-100 dark:bg-gray-900 relative">
+       <div class="md:mx-auto bg-black relative" >
           <div class="w-full flex h-screen">
              <%= render 'shared/sidebar' %>
              <div class="flex flex-col w-full h-screen relative">
+                <div style="background-image: url('https://cdn.medal.tv/games/background/background-default.png');background-repeat: no-repeat;background-size: cover;position: fixed;top: 0px;min-width: 100vw;min-height: 100vh;pointer-events: none;z-index: 100;"></div>
                 <%= render 'shared/header' %>
                 <%= yield %>            
              </div>
