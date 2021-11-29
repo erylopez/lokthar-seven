@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  activity: MyString
+  name: MyString
+  starts_at: 2021-11-24 17:46:46
+  tanks_needed: 1
+  healers_needed_integer: MyString
+  melee_dps_needed: 1
+  ranged_dps_needed: 1
+  mages_needed: 1
+  event_details: MyString
+  event_image_url: MyString
+
+two:
+  activity: MyString
+  name: MyString
+  starts_at: 2021-11-24 17:46:46
+  tanks_needed: 1
+  healers_needed_integer: MyString
+  melee_dps_needed: 1
+  ranged_dps_needed: 1
+  mages_needed: 1
+  event_details: MyString
+  event_image_url: MyString

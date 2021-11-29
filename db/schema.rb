@@ -10,10 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_24_200016) do
+ActiveRecord::Schema.define(version: 2021_11_29_224339) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "event_attendees", force: :cascade do |t|
+    t.string "discord_id"
+    t.string "name"
+    t.string "discriminator"
+    t.string "from_server"
+    t.string "from_channel"
+    t.string "guild"
+    t.string "role_1"
+    t.string "role_2"
+    t.string "role_3"
+    t.bigint "event_id", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["event_id"], name: "index_event_attendees_on_event_id"
+    t.index ["user_id"], name: "index_event_attendees_on_user_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "activity"
+    t.string "name"
+    t.datetime "starts_at", precision: 6
+    t.integer "tanks_needed"
+    t.integer "healers_needed"
+    t.integer "melee_dps_needed"
+    t.integer "ranged_dps_needed"
+    t.integer "mages_needed"
+    t.string "event_details"
+    t.string "event_image_url"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -33,8 +66,11 @@ ActiveRecord::Schema.define(version: 2021_11_24_200016) do
     t.string "discord_discriminator"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "guild_admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "event_attendees", "events"
+  add_foreign_key "event_attendees", "users"
 end

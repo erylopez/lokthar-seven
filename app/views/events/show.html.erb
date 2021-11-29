@@ -1,0 +1,30 @@
+<!-- Card -->
+<div
+  class="shadow-md rounded-md overflow-hidden text-center px-[100px] z-20"
+>
+  <div class="py-3 px-5 bg-black text-gray-200"><%= @event.activity %></div>
+
+  <div class="p-5 bg-gray-900 text-gray-100">
+    <h5 class="text-xl font-semibold mb-2"><%= @event.name %></h5>
+
+    <p class="mb-4">
+      <%= @event.event_details %>
+    </p>
+
+    <a class="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+      href="/events" type="button">
+      volver
+    </a>
+    <a class="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+      href="<%= event_publish_path(@event) %>" type="button">
+      Publicard en Discord
+    </a>
+
+    <ul>
+      <% @event.event_attendees.each do |attendee| %>
+        <li><%= attendee.role_1 %> <%= attendee.name %></li>
+      <% end -%>
+    </ul>
+  </div>
+</div>
+<!-- Card -->

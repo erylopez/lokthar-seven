@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  discord_id: MyString
+  name: MyString
+  discriminator: MyString
+  from_server: MyString
+  from_channel: MyString
+  guild: MyString
+  role_1: MyString
+  role_2: MyString
+  role_3: MyString
+  event: one
+  user: one
+
+two:
+  discord_id: MyString
+  name: MyString
+  discriminator: MyString
+  from_server: MyString
+  from_channel: MyString
+  guild: MyString
+  role_1: MyString
+  role_2: MyString
+  role_3: MyString
+  event: two
+  user: two

@@ -23,3 +23,24 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+@layer components {
+  .sidebar-button {
+    @apply w-full font-thin uppercase flex items-center px-4 py-2 my-2 transition-colors
+      duration-200 justify-start hover:bg-opacity-75 text-gray-600 hover:bg-gradient-to-r
+      motion-safe:hover:text-purple-500 motion-safe:hover:bg-gradient-to-r motion-safe:hover:from-white
+      motion-safe:hover:to-indigo-100 motion-safe:hover:border-r-4 motion-safe:hover:border-indigo-500
+      motion-safe:hover:from-indigo-700 motion-safe:hover:to-indigo-800
+  }
+
+  .sidebar-button span.text {
+    @apply mx-4 text-sm font-medium text-gray-100
+  }
+
+  .disabled.sidebar-button {
+    @apply text-gray-400 motion-safe:hover:from-gray-600 motion-safe:hover:to-gray-700
+  }
+  .disabled.sidebar-button span.text {
+    @apply text-gray-500
+  }
+}

@@ -1,0 +1,50 @@
+<%= form_with model: @event, class: "p-4 shadow-md rounded-md text-left text-white max-w-sm" do |f| %>
+    <%= f.label :name do %>
+      <span class="text-gray-400 block">Nombre del evento</span>
+      <%= f.text_field :name, placeholder: "War 50v50 en ...", class: "form-input mt-1 block w-full text-gray-700" %>
+    <% end %>
+
+    <%= f.label :event_details do %>
+      <span class="text-gray-400 block">Detalles del evento</span>
+      <%= f.text_field :event_details, placeholder: "Arrancamos a juntarnos en discord 30 minutos antes...", class: "form-input mt-1 block w-full text-gray-700" %>
+    <% end %>
+
+    <div class="mt-4">
+      <%= f.label :activity, "Tipo de evento", class: "text-gray-400 block" %>
+      <%= f.select :activity, Event::ACTIVITIES, {}, {class: "form-select mt-1 block w-full text-gray-700"} %>  
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :starts_at, "Fecha", class: "text-gray-400 block" %>
+      <%= f.datetime_field :starts_at, min: Date.today, class: 'form-input text-gray-700 mt-1' %>
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :healers_needed, "Cantidad necesaria de Healers (opcional)", class: 'text-gray-400 block' %>
+      <%= f.number_field :healers_needed, min: 0, class: 'form-input text-gray-700 mt-1 w-full'%>
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :tanks_needed, "Cantidad necesaria de Tanks (opcional)", class: 'text-gray-400 block' %>
+      <%= f.number_field :tanks_needed, min: 0, class: 'form-input text-gray-700 mt-1 w-full'%>
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :melee_dps_needed, "Cantidad necesaria de Melee DPS (opcional)", class: 'text-gray-400 block' %>
+      <%= f.number_field :melee_dps_needed, min: 0, class: 'form-input text-gray-700 mt-1 w-full'%>
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :mages_needed, "Cantidad necesaria de Magos (opcional)", class: 'text-gray-400 block' %>
+      <%= f.number_field :mages_needed, min: 0, class: 'form-input text-gray-700 mt-1 w-full'%>
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :ranged_dps_needed, "Cantidad necesaria de DPS Rango (opcional)", class: 'text-gray-400 block' %>
+      <%= f.number_field :ranged_dps_needed, min: 0, class: 'form-input text-gray-700 mt-1 w-full'%>
+    </div>
+
+    <div class="mt-4">
+      <%= f.submit 'Guardar', class: 'bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150' %>
+    </div>
+  <% end %>
