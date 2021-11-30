@@ -93,7 +93,7 @@ class EventsController < ApplicationController
 
     puts builder.embeds.map(&:to_hash).first
 
-    DiscordBot.bot.channel(914908034013208586).send_message("", tts,embed_hash, attachments, allowed_mentions, message_reference, components)
+    DiscordBot.bot.channel(676464647985037314).send_message("", tts,embed_hash, attachments, allowed_mentions, message_reference, components)
     
     redirect_to @event
   end

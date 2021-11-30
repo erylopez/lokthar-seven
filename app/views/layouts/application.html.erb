@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Lokthar</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+   <title>Lokthar</title>
+   <%= csrf_meta_tags %>
+   <%= csp_meta_tag %>
+   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+   <link rel="manifest" href="/site.webmanifest">
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+   <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
   <body>
-    <div class="bg-no-repeat bg-cover bg-top h-screen overflow-hidden z-0 relative">
-       <div class="md:mx-auto bg-black relative" >
-          <div class="w-full flex h-screen">
-             <%= render 'shared/sidebar' %>
-             <div class="flex flex-col w-full h-screen relative">
-                <div class="z-10" style="background-image: url('https://cdn.medal.tv/games/background/background-default.png');background-repeat: no-repeat;background-size: cover;position: fixed;top: 0px;min-width: 100vw;min-height: 100vh;pointer-events: none;"></div>
-                <%= render 'shared/header' %>
-                <%= yield %>            
-             </div>
+   <div class="bg-no-repeat bg-cover bg-top h-screen overflow-hidden z-0 relative">
+     <div class="md:mx-auto bg-black relative" >
+       <div class="w-full flex h-screen">
+          <%= render 'shared/sidebar' %>
+          <div class="flex flex-col w-full h-screen relative">
+            <div class="z-10" style="background-image: url('https://cdn.medal.tv/games/background/background-default.png');background-repeat: no-repeat;background-size: cover;position: fixed;top: 0px;min-width: 100vw;min-height: 100vh;pointer-events: none;"></div>
+            <%= render 'shared/header' %>
+            <section class="px-4 md:px-10 overflow-auto custom-scrollbar text-white" style="z-index: 999;">
+              <%= yield %>
+            </section>
           </div>
-          <div class="top-[5%] right-2 md:right-10 absolute z-40 shadow-md"></div>
        </div>
-    </div>
+       <div class="top-[5%] right-2 md:right-10 absolute z-40 shadow-md"></div>
+     </div>
+   </div>
   </body>
 </html>

@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   resources :events do
     get :publish
   end
+
+  resources :parties
 end

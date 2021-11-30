@@ -1,0 +1,31 @@
+<link
+  href="https://cdn.jsdelivr.net/npm/@tailwindcss/custom-forms@0.2.1/dist/custom-forms.css"
+  rel="stylesheet"
+/>
+
+<%= form_with model: @party, url: parties_path, method: :post, class: "p-4 shadow-md rounded-md text-left text-white max-w-[900px]" do |f| %>
+  <%= f.hidden_field :event_id %>
+  <%= f.label :title do %>
+    <span class="text-gray-400 block">Nombre del squad</span>
+    <%= f.text_field :title, placeholder: "Squad de Defensa", class: "form-input mt-1 block w-full text-gray-700" %>
+  <% end %>
+
+  <% 10.times do |party_index| %>
+    <div class="mt-4 flex flex-row bg-gray-800 rounded p-4 items-center justify-center">
+      <p class="w-full flex-1 uppercase text-sm font-bold">Party #<%= party_index+1 %></p>
+      <% 5.times do |member_index| %>
+        <% member_label = "p#{party_index}_m#{member_index + 1}" %>
+        <div class="mr-2">
+          <%= f.label member_label, "Player #{member_index + 1}", class: "text-gray-400 block" %>
+          <%= f.select member_label, 
+                       options_for_select(EventParty::ROLE_OPTIONS, EventParty::DEFAULT_OPTIONS[member_label]), {},
+                       {class: "form-select mt-1 block w-full text-gray-700"} %>
+        </div>
+      <% end -%>
+    </div>
+  <% end -%>
+
+  <div class="mt-4">
+    <%= f.submit 'Guardar', class: 'bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150' %>
+  </div>
+<% end %>
