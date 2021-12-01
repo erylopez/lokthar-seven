@@ -44,7 +44,7 @@
                     </div>
                   <% end -%>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap">
+                <td class="px-6 py-4">
                   <div class="text-sm text-gray-200"><%= event.event_details %></div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -52,8 +52,8 @@
                     Active
                   </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <a href="<%= edit_event_path(event) %>" class="text-blue-400 hover:text-indigo-200">Edit</a>
+                <td class="px-5 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <a href="<%= edit_event_path(event) %>" class="text-blue-400 hover:text-indigo-200 mr-4">Edit</a>
                   <%# button_to "Borrar", destroy_event_path, method: :delete, data: { turbo: false },
                       class: "text-blue-400 hover:text-indigo-200"%>
                   <a href="#" class="text-blue-400 hover:text-indigo-200">Delete</a>
