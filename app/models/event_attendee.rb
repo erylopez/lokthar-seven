@@ -1,4 +1,15 @@
 class EventAttendee < ApplicationRecord
   belongs_to :event
   belongs_to :user, optional: true
+
+  # dont uncomment: this is now validated by a uniqueness index at db lvl
+  # validates :discord_id, presence: true, uniqueness: { scope: :event_id }
+
+  def self.get_guild(roles)
+    return "Lokthar" if "Lokthar".in?(roles)
+    return "Drakkarys" if "Drakkarys".in?(roles)
+    return "GodComplex" if "GodComplex".in?(roles)
+    return "Legion" if "Legion".in?(roles)
+    "NN"
+  end
 end

@@ -18,21 +18,23 @@ class PartiesController < ApplicationController
 
   def new
     event  = Event.find(params[:event_id])
-    @party = event.event_parties.new
+    @party = event.build_event_party
   end
 
   def create
     event  = Event.find(party_params[:event_id])
-    party = event.event_parties.new(title: party_params[:title])
-    party.party_format = party_params.except(:title, :event_id)
+    @party = event.build_event_party(title: party_params[:title])
+    @party.party_format = party_params.except(:title, :event_id)
 
-    if party.save
+    if @party.save
       redirect_to parties_path
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
+
   def edit; end
+
   def update
     if @party.update(members: party_params.except(:title, :event_id))
       redirect_to party_path(@party)
@@ -40,8 +42,12 @@ class PartiesController < ApplicationController
       render :show
     end
   end
-  def destroy; end
 
+  def destroy
+    event = @party.event
+    @party.destroy
+    redirect_to new_party_path(event_id: event)
+  end
 
   protected
 

@@ -3,11 +3,13 @@
   rel="stylesheet"
 />
 
+
+<%= @party.errors.full_messages.first if @party.errors.any? %>
 <%= form_with model: @party, url: parties_path, method: :post, class: "p-4 shadow-md rounded-md text-left text-white max-w-[900px]" do |f| %>
   <%= f.hidden_field :event_id %>
   <%= f.label :title do %>
     <span class="text-gray-400 block">Nombre del squad</span>
-    <%= f.text_field :title, placeholder: "Squad de Defensa", class: "form-input mt-1 block w-full text-gray-700" %>
+    <%= f.text_field :title, placeholder: "Squad de Defensa", class: "form-input mt-1 block w-full text-gray-700", required: true %>
   <% end %>
 
   <% 10.times do |party_index| %>

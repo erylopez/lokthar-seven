@@ -40,14 +40,20 @@
                   <% end -%>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <% event.event_parties.each do |party| %>
-                    <a href="<%= party_path(party) %>" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                      <%= party.title || party.event.name %>
+                  <% if event.event_party %>
+                    <a href="<%= party_path(event.event_party) %>" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                      <%= event.event_party .title || event.event_party .event.name %>
                     </a>
                   <% end -%>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <a href="<%= new_party_path(event_id: event) %>" class="text-purple-500 hover:text-purple-100 bg-gray-900 rounded p-4">Crear Party para este evento</a>
+                  <% if event.event_party %>
+                    <%= link_to "Borrar parties", party_path(event.event_party), method: :delete, class: "text-gray-200 hover:text-purple-100 bg-red-800 rounded p-4",data: { confirm: "Estas seguro que deseas borrar esta party?" } %>
+                  <% else %>
+                    <a href="<%= new_party_path(event_id: event) %>" class="text-purple-500 hover:text-purple-100 bg-gray-900 rounded p-4">
+                      Crear Party para este evento
+                    </a>
+                  <% end -%>
                 </td>
               </tr>
             <% end -%>

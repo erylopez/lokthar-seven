@@ -15,16 +15,27 @@
       href="/events" type="button">
       volver
     </a>
-    <a class="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-      href="<%= event_publish_path(@event) %>" type="button">
-      Publicard en Discord
-    </a>
 
-    <ul>
-      <% @event.event_attendees.each do |attendee| %>
-        <li><%= attendee.role_1 %> <%= attendee.name %></li>
-      <% end -%>
-    </ul>
+    <% if @event.published_at.present? %>
+      <div class="flex flex-col my-4">
+        <div class="w-full">
+          <%= link_to "Publicar nuevamente en Discord", event_publish_path(@event), class: "bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 max-w-[200px]", data: { turbo:false, confirm: "Seguro? Este eveno ya ha sido publicado anteriormente."}  %>
+        </div>
+        <span class="text-xs font-bold text-gray-500 mt-2">Este evento se publico en discord el <%= @event.published_at %></span>
+      </div>
+    <% else %>
+      <%= link_to "Publicar en Discord", event_publish_path(@event), class: "bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"  %>
+    <% end -%>
+
+    <div>
+      <span class="font-bold text-xl text-gray-200">Confirmados</span>
+      <ul class="mt-4">
+        <% @event.event_attendees.each do |attendee| %>
+          <li>[<%= attendee.role_1 %>] - <%= attendee.nickname %> - Guild: <%= attendee.guild %></li>
+        <% end -%>
+      </ul>
+    </div>
+
   </div>
 </div>
 <!-- Card -->

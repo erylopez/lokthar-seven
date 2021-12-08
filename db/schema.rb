@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_29_231436) do
+ActiveRecord::Schema.define(version: 2021_12_07_165127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(version: 2021_11_29_231436) do
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "nickname"
+    t.index ["discord_id", "event_id"], name: "index_event_attendees_on_discord_id_and_event_id", unique: true
     t.index ["event_id"], name: "index_event_attendees_on_event_id"
     t.index ["user_id"], name: "index_event_attendees_on_user_id"
   end
@@ -56,6 +58,9 @@ ActiveRecord::Schema.define(version: 2021_11_29_231436) do
     t.string "event_image_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "location"
+    t.datetime "published_at", precision: 6
+    t.jsonb "discord_messages"
   end
 
   create_table "users", force: :cascade do |t|

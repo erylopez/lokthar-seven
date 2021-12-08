@@ -38,6 +38,8 @@ class EventsController < ApplicationController
   end
 
   def publish
+    @event.update(published_at: Time.now)
+
     buttons = Discordrb::Components::View.new do |v|
       v.row do |r|
         r.button(style: :primary, label: 'Voy a ir', custom_id: "accept_event:event_id_#{@event.id}")
@@ -65,36 +67,40 @@ class EventsController < ApplicationController
 
     embed_hash = {
       :title=>@event.name,
-      :description=>"#{EmojiWritter.new(@event.name).process} \n#{@event.event_details}\n\n\nParty 4: Siege Weapons",
+      :description=>"#{EmojiWritter.new(@event.name).process} \n\n#{@event.event_details}",
       :url=>nil,
       :timestamp=>"2021-11-28T20:05:20Z",
-      :color=>3553599,
+      :color=>0x8700f5,
       :footer=>{
         :icon_url => "https://i.imgur.com/61tyXNu.png",
         :text => "Si tienen algun problema con el bot, PM a Ksix"
       },
-      :image=>nil,
+      :image=>{ :url => Event::EVENT_BANNER[@event.location] },
       :thumbnail=>nil,
       :video=>nil,
       :provider=>nil,
-      :author=>nil,
-      :fields=>[
-        { name: "Party 1", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
-        { name: "Party 2", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
-        { name: "Party 3", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
-        { name: "Party 5", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
-        { name: "Party 6", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
-        { name: "Party 7", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
-        { name: "Party 8", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
-        { name: "Party 9", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
-        { name: "Party 10", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true}
-      ]
+      :author=>nil
+      # :fields=>[
+      #   { name: "Party 1", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
+      #   { name: "Party 2", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
+      #   { name: "Party 3", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
+      #   { name: "Party 5", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
+      #   { name: "Party 6", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
+      #   { name: "Party 7", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
+      #   { name: "Party 8", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
+      #   { name: "Party 9", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true},
+      #   { name: "Party 10", value: "Tank\nHealer\nDPS Melee\nDPS Melee\nMago", inline: true}
+      # ]
     }
 
     puts builder.embeds.map(&:to_hash).first
 
-    DiscordBot.bot.channel(676464647985037314).send_message("", tts,embed_hash, attachments, allowed_mentions, message_reference, components)
-    
+    # DiscordBot.bot.channel(916413902265384990).send_message("", tts,embed_hash, attachments, allowed_mentions, message_reference, components)
+    message = DiscordBot.bot.channel(676464647985037314).send_message("", tts,embed_hash, attachments, allowed_mentions, message_reference, components)
+
+    discord_messages = @event.discord_messages || []
+    discord_messages << {channel: message.channel.id, message: message.id}
+    @event.update(discord_messages: discord_messages)
     redirect_to @event
   end
 
@@ -106,7 +112,7 @@ class EventsController < ApplicationController
 
   def event_params
     params.require(:event).permit(:activity, :name, :starts_at,
-      :tanks_needed, :healers_needed, :melee_dps_needed,
+      :location, :tanks_needed, :healers_needed, :melee_dps_needed,
       :ranged_dps_needed, :mages_needed, :event_details, :event_image_url
     )
   end

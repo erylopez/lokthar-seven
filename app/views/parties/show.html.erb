@@ -21,7 +21,7 @@
 <% end -%>
 
 <script type="text/javascript">
-    function uniquenessValidation(select) {
+    function uniquenessValidation(currentSelect) {
       let selected_ids = [];
 
       document.querySelectorAll('select').forEach(e => {
@@ -31,9 +31,18 @@
       let duplicates = selected_ids.filter(Number).filter((e, i, a) => a.indexOf(e) !== i)
 
       if (duplicates.length > 0) {
-        let member = select.options[select.selectedIndex].text;
-        alert(`${member} ya fue elegido en otro grupo. Remuevelo del anterior antes de asignarlo a otro grupo`);
-        select.selectedIndex = 0;
+        let member = currentSelect.options[currentSelect.selectedIndex].text;
+        let repsonse = confirm(`Seguro que deseas cambiar a ${member} de grupo?`)
+
+        if (repsonse) {
+          member_id = currentSelect.options[currentSelect.selectedIndex].value;
+          option = document.querySelector(`option[selected="selected"][value="${member_id}"]`);
+          currentSelect.options[currentSelect.selectedIndex].setAttribute('selected', 'selected');
+          option.setAttribute('selected', false);
+          option.parentElement.selectedIndex = 0
+        } else {
+          currentSelect.selectedIndex = 0;
+        }
       }
     }
 </script>

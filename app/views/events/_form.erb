@@ -10,6 +10,11 @@
     <% end %>
 
     <div class="mt-4">
+      <%= f.label :location, "Lugar del evento", class: "text-gray-400 block" %>
+      <%= f.select :location, Event::EVENT_BANNER.keys, {}, {class: "form-select mt-1 block w-full text-gray-700"} %>
+    </div>
+
+    <div class="mt-4">
       <%= f.label :activity, "Tipo de evento", class: "text-gray-400 block" %>
       <%= f.select :activity, Event::ACTIVITIES, {}, {class: "form-select mt-1 block w-full text-gray-700"} %>  
     </div>

@@ -73,6 +73,13 @@ class EventParty < ApplicationRecord
                 :p8_m1, :p8_m2, :p8_m3, :p8_m4, :p8_m5,
                 :p9_m1, :p9_m2, :p9_m3, :p9_m4, :p9_m5
 
+  validates :title, presence: true
+  after_update :publish_update_on_discord
+
+  def publish_update_on_discord
+    event.edit_msg
+  end
+
   def member_for(position, attendees)
     position_role = party_format[position]
     filtered = attendees.select{|attendee| position_role.in?(attendee[:roles])}
@@ -87,6 +94,37 @@ class EventParty < ApplicationRecord
       member.present? ? ["#{member[:name]} (#{position_role.humanize})", member[:id]] : []
     else
       []
+    end
+  end
+
+  def parties_hash
+    return [] unless party_format.present?
+
+    attendees = event.event_attendees.map do |attendee|
+      {
+        id: attendee.id,
+        name: attendee.name,
+        roles: [attendee.role_1, attendee.role_2, attendee.role_3]
+      }
+    end
+
+    temp_hash = {}
+    10.times{|i| temp_hash[i] = {members: []}}
+
+    10.times do |party_index|
+      5.times do |member_index|
+        next unless members
+        position      = "p#{party_index}_m#{member_index + 1}"
+        position_role = party_format[position]
+
+        member = attendees.select{|attendee| attendee[:id] == members[position].to_i}.first
+        text   = member.present? ? "#{member[:name]} (#{position_role.humanize})" : "#{position_role.humanize}"
+        temp_hash[party_index][:members] << text
+      end
+    end
+
+    (0...10).map do |party_index|
+      {name: "Party #{party_index + 1}", value: temp_hash[party_index][:members].join("\n"), inline: true}
     end
   end
 end
