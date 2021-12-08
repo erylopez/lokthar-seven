@@ -20,10 +20,28 @@ unless ActiveModel::Type::Boolean.new.cast(ENV['SKIP_BOTS'])
 
       @bot.command(:setup) do |event, *args|
         server = event.server.id
+        server_name = event.server.name
         channel = event.channel.id
+        channel_name = event.channel.name
         user = event.user.id
 
+        DiscordSetup.find_or_create_by(created_by: user, server_id: server, channel_id: channel, channel_name: channel_name, server_name: server_name)
+
         puts "Server: #{server} || channel: #{channel} || user: #{user}"
+        event.respond("Listo! se mandaran los mensajes en este canal")
+      end
+
+      @bot.command(:uninstall) do |event, *args|
+        server = event.server.id
+        channel = event.channel.id
+        setups = DiscordSetup.where(server_id: server, channel_id: channel)
+
+        if setups.any?
+          setups.destroy_all
+          event.respond("El bot ya no mandara mensajes a este canal! 🤖")
+        else
+          event.respond("El bot no esta configurado en este canal aun! 🤖")
+        end
       end
 
       @bot.button(custom_id: /accept_event/) do |event|

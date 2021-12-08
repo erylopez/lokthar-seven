@@ -96,11 +96,15 @@ class EventsController < ApplicationController
     puts builder.embeds.map(&:to_hash).first
 
     # DiscordBot.bot.channel(916413902265384990).send_message("", tts,embed_hash, attachments, allowed_mentions, message_reference, components)
-    message = DiscordBot.bot.channel(676464647985037314).send_message("", tts,embed_hash, attachments, allowed_mentions, message_reference, components)
+    DiscordSetup.all.each do |discord_setup|
+      message = DiscordBot.bot.channel(discord_setup.channel_id).send_message("", tts,embed_hash, attachments, allowed_mentions, message_reference, components)
 
-    discord_messages = @event.discord_messages || []
-    discord_messages << {channel: message.channel.id, message: message.id}
-    @event.update(discord_messages: discord_messages)
+      discord_messages = @event.discord_messages || []
+      discord_messages << {channel: message.channel.id, message: message.id}
+
+      @event.update(discord_messages: discord_messages)
+    end
+
     redirect_to @event
   end
 

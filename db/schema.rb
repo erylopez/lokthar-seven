@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_07_165127) do
+ActiveRecord::Schema.define(version: 2021_12_08_180402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "discord_setups", force: :cascade do |t|
+    t.string "created_by"
+    t.string "server_id"
+    t.string "channel_id"
+    t.string "server_name"
+    t.string "channel_name"
+    t.string "role_tag"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "event_attendees", force: :cascade do |t|
     t.string "discord_id"
