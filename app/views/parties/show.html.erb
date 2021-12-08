@@ -13,9 +13,27 @@
         <% member_label = "p#{party_index}_m#{member_index + 1}" %>
           <%= f.select member_label, 
                        options_for_select(@party.member_for(member_label, @attendees), @party.member_at(member_label, @attendees)),
-                       {}, {class: "form-select mt-1 block w-full text-gray-200 bg-gray-900"} %>
+                       {}, {class: "form-select mt-1 block w-full text-gray-200 bg-gray-900", onchange: "uniquenessValidation(this)"} %>
         <% end -%>
       </div>
     <% end -%>  
   </div>
 <% end -%>
+
+<script type="text/javascript">
+    function uniquenessValidation(select) {
+      let selected_ids = [];
+
+      document.querySelectorAll('select').forEach(e => {
+        selected_ids.push(e.options[e.selectedIndex].value)
+      })
+
+      let duplicates = selected_ids.filter(Number).filter((e, i, a) => a.indexOf(e) !== i)
+
+      if (duplicates.length > 0) {
+        let member = select.options[select.selectedIndex].text;
+        alert(`${member} ya fue elegido en otro grupo. Remuevelo del anterior antes de asignarlo a otro grupo`);
+        select.selectedIndex = 0;
+      }
+    }
+</script>
