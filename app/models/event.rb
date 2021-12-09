@@ -42,7 +42,7 @@ class Event < ApplicationRecord
 
     discord_messages.each do |msg_log|
       message = DiscordBot.bot.channel(msg_log["channel"]).message(msg_log["message"])
-      message.edit("", embed_hash) if message
+      message.edit("@everyone", embed_hash) if message
     end
   end
 end
