@@ -11,6 +11,7 @@ class PartiesController < ApplicationController
       {
         id: attendee.id,
         name: attendee.name,
+        nickname: attendee.nickname,
         roles: [attendee.role_1, attendee.role_2, attendee.role_3]
       }
     end

@@ -84,7 +84,7 @@ class EventParty < ApplicationRecord
     position_role = party_format[position]
     filtered = attendees.select{|attendee| position_role.in?(attendee[:roles])}
     return [[position_role.humanize, nil]] unless filtered.any?
-    [[position_role.humanize, nil], []] + filtered.map{|member| ["#{member[:name]} (#{position_role.humanize})", member[:id]]}
+    [[position_role.humanize, nil], []] + filtered.map{|member| ["#{member[:nickname]} (#{position_role.humanize} | #{member[:roles]&.compact&.join(",")})", member[:id]]}
   end
 
   def member_at(position, attendees)
