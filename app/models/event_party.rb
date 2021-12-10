@@ -119,7 +119,7 @@ class EventParty < ApplicationRecord
         position_role = party_format[position]
 
         member = attendees.select{|attendee| attendee[:id] == members[position].to_i}.first
-        text   = member.present? ? "#{member[:name]} (#{position_role.humanize})" : "#{position_role.humanize}"
+        text   = member.present? ? "#{member[:nick]} (#{position_role.humanize})" : "#{position_role.humanize}"
         temp_hash[party_index][:members] << text
       end
     end
