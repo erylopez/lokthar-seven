@@ -104,6 +104,7 @@ class EventParty < ApplicationRecord
       {
         id: attendee.id,
         name: attendee.name,
+        nick: attendee.nickname,
         roles: [attendee.role_1, attendee.role_2, attendee.role_3]
       }
     end

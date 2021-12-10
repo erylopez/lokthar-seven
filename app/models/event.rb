@@ -19,8 +19,8 @@ class Event < ApplicationRecord
   def edit_msg
     url = "https://www.lokthar.com/logo-clear.png"
 
-    fields_hash = event_party.parties_hash.select{|party| party[:name] != "Party 4"}
-    party_4     = event_party.parties_hash.select{|party| party[:name] == "Party 4"}.first[:value].split("\n").join(" - ")
+    fields_hash = event_party.parties_hash.select{|party| party[:nick] != "Party 4"}
+    party_4     = event_party.parties_hash.select{|party| party[:nick] == "Party 4"}.first[:value].split("\n").join(" - ")
 
     embed_hash = {
       :title=>name,
