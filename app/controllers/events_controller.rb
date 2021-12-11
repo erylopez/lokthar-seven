@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy, :publish]
 
   def index
-    @events = Event.all
+    @events = Event.where(listed: true)
   end
 
   def show; end
@@ -33,7 +33,7 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event.destroy
+    @event.update(listed: false)
     redirect_to events_path
   end
 
