@@ -1,39 +1,61 @@
-<!-- Card -->
-<div
-  class="shadow-md rounded-md overflow-hidden text-center px-[100px] z-20"
->
+<div class="shadow-md rounded-md overflow-hidden text-center px-[100px] z-20  mx-auto">
   <div class="py-3 px-5 bg-black text-gray-200"><%= @event.activity %></div>
-
-  <div class="p-5 bg-gray-900 text-gray-100">
+  <div class="p-5 bg-gray-900 text-gray-100 ">
     <h5 class="text-xl font-semibold mb-2"><%= @event.name %></h5>
-
     <p class="mb-4">
       <%= @event.event_details %>
     </p>
 
-    <a class="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+    <a class="bg-purple-500 text-white hover:bg-purple-700 active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
       href="/events" type="button">
       volver
     </a>
+    <%= link_to "Editar", edit_event_path(@event), class: "bg-purple-500 hover:bg-purple-700 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" %>
 
     <% if @event.published_at.present? %>
-      <div class="flex flex-col my-4">
-        <div class="w-full">
-          <%= link_to "Publicar nuevamente en Discord", event_publish_path(@event), class: "bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 max-w-[200px]", data: { turbo:false, confirm: "Seguro? Este eveno ya ha sido publicado anteriormente."}  %>
+      <div class="flex flex-col my-4 items-center">
+        <div class="w-full flex flex-col">
+          <%= link_to "Actualizar mensaje en todos los servidores", event_republish_path(@event), class: "bg-purple-500 text-white active:bg-purple-600 hover:bg-purple-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150", data: { turbo:false, confirm: "Seguro? Este eveno ya ha sido publicado anteriormente."}  %>
+          <hr class="mb-2 mt-2 border-gray-700">
+          <% DiscordSetup.all.each do |setup| %>
+            <%= link_to "Publicar de nuevo en Server: #{setup.server_name}, Canal: #{setup.channel_name}",
+                event_publish_path(event_id: @event, setup_id: setup.id),
+                class: "bg-purple-500 hover:bg-purple-700 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            %>
+          <% end -%>
         </div>
+        <span class="text-xs font-bold text-gray-500 mt-2">"Publicar de nuevo" manda un mensaje nuevo, no actualiza el ya mandado.</span>
         <span class="text-xs font-bold text-gray-500 mt-2">Este evento se publico en discord el <%= @event.published_at %></span>
       </div>
     <% else %>
-      <%= link_to "Publicar en Discord", event_publish_path(@event), class: "bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"  %>
+      <%= link_to "Publicar en todos los discord", event_publish_path(@event), class: "bg-purple-500 text-white active:bg-purple-600 hover:bg-purple-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"  %>
+      <% DiscordSetup.all.each do |setup| %>
+        <%= link_to "Publicar en Server: #{setup.server_name}, Canal: #{setup.channel_name}",
+            event_publish_path(id: @event, setup_id: setup.id),
+            class: "bg-purple-500 hover:bg-purple-700 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        %>
+      <% end -%>
     <% end -%>
 
-    <div>
-      <span class="font-bold text-xl text-gray-200">Confirmados</span>
-      <ul class="mt-4">
-        <% @event.event_attendees.each do |attendee| %>
-          <li>[<%= attendee.role_1 %>] - <%= attendee.nickname || attendee.name %> - Guild: <%= attendee.guild %></li>
-        <% end -%>
-      </ul>
+    <div class="flex w-full justify-center gap-4">
+      <div class="flex-grow max-w-[50%]">
+        <span class="font-bold text-xl text-gray-200">Confirmados</span>
+        <ul class="mt-4">
+          <% @event.event_attendees.coming.each do |attendee| %>
+            <li>[<%= attendee.role_1 %>] - <%= attendee.nickname || attendee.name %> - Guild: <%= attendee.guild %></li>
+          <% end -%>
+        </ul>
+      </div>
+      <% if @event.event_attendees.not_coming.any? %>
+        <div class="flex-grow max-w-[50%]">
+          <span class="font-bold text-xl text-gray-200">No Asistiran</span>
+          <ul class="mt-4">
+            <% @event.event_attendees.not_coming.each do |attendee| %>
+              <li>[<%= attendee.role_1 %>] - <%= attendee.nickname || attendee.name %> - Guild: <%= attendee.guild %></li>
+            <% end -%>
+          </ul>
+        </div>
+      <% end -%>
     </div>
 
   </div>

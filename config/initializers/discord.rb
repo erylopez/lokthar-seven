@@ -54,6 +54,7 @@ unless ActiveModel::Type::Boolean.new.cast(ENV['SKIP_BOTS'])
           attendee.guild        = EventAttendee.get_guild(event.user.roles.map(&:name))
           attendee.from_server  = event.server_id
           attendee.from_channel = event.channel.id
+          attendee.will_come    = true
         end
 
         if attendee.valid? && attendee.created_at == attendee.updated_at && attendee.role_1.nil?
@@ -69,14 +70,32 @@ unless ActiveModel::Type::Boolean.new.cast(ENV['SKIP_BOTS'])
             end
           end
         else
+          attendee.update(will_come: true)
           event.respond(content: "Ya estas anotado en este evento como #{attendee&.role_1&.humanize}", ephemeral: true)
           puts "race condition error? #{event.user.id} || #{event_id} || #{attendee.errors.full_messages}"
         end
       end
 
       @bot.button(custom_id: /decline_event/) do |event|
-        event_id = event.custom_id.split(":").last
-        event.respond(content: "Gracias por avisar!", ephemeral: true)
+        event_id = event.custom_id.split("decline_event:event_id_").last
+        event_record = Event.find(event_id)
+
+        attendee = EventAttendee.create_or_find_by(discord_id: event.user.id, event: event_record) do |attendee|
+          attendee.name         = "#{event.user.username}##{event.user.discord_tag}"
+          attendee.nickname     = event.user.nick
+          attendee.guild        = EventAttendee.get_guild(event.user.roles.map(&:name))
+          attendee.from_server  = event.server_id
+          attendee.from_channel = event.channel.id
+          attendee.will_come    = false
+        end
+
+        if attendee.id.in?(event_record.event_party.members.values.map(&:to_i))
+          event.respond(content: "**Ya estabas asigando a una party** por favor habla con algun consul o lider para avisarles que no podras asistir. Ya te sacamos de la lista de asistentes pero la organizacion ya contaba con tu presencia, por favor enviales un mensaje para que busquemos un remplazo lo antes posible.", ephemeral: true)
+        else
+          event.respond(content: "Gracias por avisar Juancarlo'. Te sacamos del pool de jugadores de este evento y notificamos a la organizacion de que no podras asistir.", ephemeral: true)
+        end
+
+        attendee.update(will_come: false)
       end
 
       @bot.select_menu(custom_id: /event_role_select/) do |event|

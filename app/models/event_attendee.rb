@@ -2,6 +2,9 @@ class EventAttendee < ApplicationRecord
   belongs_to :event
   belongs_to :user, optional: true
 
+  scope :coming,     -> { where(will_come: true) }
+  scope :not_coming, -> { where(will_come: false) }
+
   # dont uncomment: this is now validated by a uniqueness index at db lvl
   # validates :discord_id, presence: true, uniqueness: { scope: :event_id }
 

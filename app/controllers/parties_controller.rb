@@ -3,7 +3,7 @@ class PartiesController < ApplicationController
   before_action :set_party, only: [:show, :edit, :update, :destroy, :publish]
 
   def index
-    @events = Event.all
+    @events = Event.where(listed: true).order(created_at: :desc)
   end
 
   def show
