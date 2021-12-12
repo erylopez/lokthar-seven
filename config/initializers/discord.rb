@@ -89,7 +89,7 @@ unless ActiveModel::Type::Boolean.new.cast(ENV['SKIP_BOTS'])
           attendee.will_come    = false
         end
 
-        if attendee.id.in?(event_record.event_party.members.values.map(&:to_i))
+        if event_record.event_party&.members && attendee.id.in?(event_record.event_party.members.values.map(&:to_i))
           event.respond(content: "**Ya estabas asigando a una party** por favor habla con algun consul o lider para avisarles que no podras asistir. Ya te sacamos de la lista de asistentes pero la organizacion ya contaba con tu presencia, por favor enviales un mensaje para que busquemos un remplazo lo antes posible.", ephemeral: true)
         else
           event.respond(content: "Gracias por avisar Juancarlo'. Te sacamos del pool de jugadores de este evento y notificamos a la organizacion de que no podras asistir.", ephemeral: true)
