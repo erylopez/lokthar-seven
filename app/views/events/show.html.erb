@@ -31,7 +31,7 @@
       <%= link_to "Publicar en todos los discord", event_publish_path(@event), class: "bg-purple-500 text-white active:bg-purple-600 hover:bg-purple-700 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"  %>
       <% DiscordSetup.all.each do |setup| %>
         <%= link_to "Publicar en Server: #{setup.server_name}, Canal: #{setup.channel_name}",
-            event_publish_path(id: @event, setup_id: setup.id),
+            event_publish_path(event_id: @event, setup_id: setup.id),
             class: "bg-purple-500 hover:bg-purple-700 text-white active:bg-purple-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         %>
       <% end -%>
