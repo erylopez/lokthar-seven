@@ -15,4 +15,8 @@ class EventAttendee < ApplicationRecord
     return "Legion" if "Legion".in?(roles)
     "NN"
   end
+
+  def roles_human
+    [role_1, role_2, role_3].compact.map(&:humanize).join(", ")
+  end
 end

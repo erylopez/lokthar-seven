@@ -71,7 +71,7 @@ unless ActiveModel::Type::Boolean.new.cast(ENV['SKIP_BOTS'])
           end
         else
           attendee.update(will_come: true)
-          event.respond(content: "Ya estas anotado en este evento como #{attendee&.role_1&.humanize}", ephemeral: true)
+          event.respond(content: "Asistiras y estas anotado en este evento como: #{attendee&.roles_human}", ephemeral: true)
           puts "race condition error? #{event.user.id} || #{event_id} || #{attendee.errors.full_messages}"
         end
       end
