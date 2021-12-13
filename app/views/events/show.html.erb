@@ -42,7 +42,7 @@
         <span class="font-bold text-xl text-gray-200">Confirmados</span>
         <ul class="mt-4">
           <% @event.event_attendees.coming.each do |attendee| %>
-            <li>[<%= attendee.role_1 %>] - <%= attendee.nickname || attendee.name %> - Guild: <%= attendee.guild %></li>
+            <li class="font-bold"><%= attendee.role_icon.html_safe %> - <%= attendee.nickname || attendee.name %> - Guild: <%= attendee.guild %></li>
           <% end -%>
         </ul>
       </div>
@@ -51,7 +51,7 @@
           <span class="font-bold text-xl text-gray-200">No Asistiran</span>
           <ul class="mt-4">
             <% @event.event_attendees.not_coming.each do |attendee| %>
-              <li>[<%= attendee.role_1 %>] - <%= attendee.nickname || attendee.name %> - Guild: <%= attendee.guild %></li>
+              <li class="font-bold"><%= attendee.role_icon.html_safe %> - <%= attendee.nickname || attendee.name %> - Guild: <%= attendee.guild %></li>
             <% end -%>
           </ul>
         </div>
