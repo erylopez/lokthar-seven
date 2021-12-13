@@ -6,7 +6,8 @@ class EventParty < ApplicationRecord
     ['Healer', 'healer'],
     ['DPS Melee', 'dps_melee'],
     ['Arquero', 'arquero'],
-    ['Mago', 'mago']
+    ['Mago', 'mago'],
+    ['Flex', 'any']
   ]
 
   DEFAULT_OPTIONS = {
@@ -82,9 +83,15 @@ class EventParty < ApplicationRecord
 
   def member_for(position, attendees)
     position_role = party_format[position]
-    filtered = attendees.select{|attendee| position_role.in?(attendee[:roles])}
-    return [[position_role.humanize, nil]] unless filtered.any?
-    [[position_role.humanize, nil], []] + filtered.map{|member| ["#{member[:nickname] || member[:name]} (#{position_role.humanize} | #{member[:roles]&.compact&.join(",")})", member[:id]]}
+    position_label = position_role.humanize
+    if position_role == "any"
+      filtered = attendees
+      position_label = "Flex"
+    else
+      filtered = attendees.select{|attendee| position_role.in?(attendee[:roles])}
+    end
+    return [[position_label, nil]] unless filtered.any?
+    [[position_label, nil], []] + filtered.map{|member| ["#{member[:nickname] || member[:name]} (#{position_label} | #{member[:roles]&.compact&.join(",")})", member[:id]]}
   end
 
   def member_at(position, attendees)
