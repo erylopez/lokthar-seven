@@ -7,7 +7,7 @@ class PartiesController < ApplicationController
   end
 
   def show
-    @attendees = @party.event.event_attendees.map do |attendee|
+    @attendees = @party.event.event_attendees.coming.map do |attendee|
       {
         id: attendee.id,
         name: attendee.name,
