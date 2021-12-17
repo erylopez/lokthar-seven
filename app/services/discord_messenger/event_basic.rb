@@ -55,7 +55,7 @@ class DiscordMessenger::EventBasic
 
   def deliver
     DiscordSetup.all.each do |discord_setup|
-      message = DiscordBot.bot.channel(discord_setup.channel_id).send_message("", @tts, embed_hash, @attachments, @allowed_mentions, @message_reference, components)
+      message = DiscordBot.bot.channel(discord_setup.channel_id).send_message("@everyone", @tts, embed_hash, @attachments, @allowed_mentions, @message_reference, components)
 
       discord_messages = @event.discord_messages || []
       discord_messages << {channel: message.channel.id, message: message.id}
