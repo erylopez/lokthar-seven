@@ -4,7 +4,7 @@ unless ActiveModel::Type::Boolean.new.cast(ENV['SKIP_BOTS'])
   module DiscordBot
     def initialize_bot
       @bot ||= Discordrb::Commands::CommandBot.new(
-        token: "ODk4NjA0MzgyNzgwNzg4ODU2.YWmojA.gk69byxW_wuLLjsdnGgm4W-3j5Y",
+        token: Rails.application.credentials.discord_oauth.token,
         prefix: 'nw!',
         intents: [:server_messages, :server_members]
       )
